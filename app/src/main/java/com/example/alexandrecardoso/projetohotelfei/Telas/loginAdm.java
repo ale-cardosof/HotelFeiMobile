@@ -15,7 +15,7 @@ import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.te
 
 public class loginAdm extends AppCompatActivity {
     TextInputEditText input_username, input_password;
-
+    // teste
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
