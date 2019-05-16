@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "583484532792",
+    "firebase_url": "https://hotelfeimobile.firebaseio.com",
+    "project_id": "hotelfeimobile",
+    "storage_bucket": "hotelfeimobile.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:583484532792:android:cada18a66784fe9a",
+        "android_client_info": {
+          "package_name": "com.example.alexandrecardoso.projetohotelfei"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "583484532792-1ddsgbib637b8sjfj0i4fme2dg9e2d39.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.alexandrecardoso.projetohotelfei",
+            "certificate_hash": "141a8fe79d0ec97cb2fbb4bdf8f5e804e664e354"
+          }
+        },
+        {
+          "client_id": "583484532792-5tanfiu4s6do376tmdtdajlhj1m49rq4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAhVuQJ19LOnf2-jDQWG2NmbPD8S6X-ds"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "583484532792-5tanfiu4s6do376tmdtdajlhj1m49rq4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

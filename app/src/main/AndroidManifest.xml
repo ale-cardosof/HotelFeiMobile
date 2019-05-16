@@ -30,7 +30,7 @@
         <activity android:name=".Telas.cadastroUser" />
         <activity android:name=".Telas.loginUser" />
         <activity android:name=".Telas.menuCadastroNovoFuncionario" />
-        <activity android:name=".Telas.menuVisualizarHotel" />
+        <!--activity android:name=".Telas.menuVisualizarHotel" /-->
         <activity android:name=".Telas.menuAdministrador" />
         <activity android:name=".Telas.loginAdm" />
         <activity android:name=".Telas.UsuarioNovaReserva" />
