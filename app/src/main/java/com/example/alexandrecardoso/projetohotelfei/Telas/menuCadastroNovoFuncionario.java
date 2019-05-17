@@ -1,18 +1,28 @@
 package com.example.alexandrecardoso.projetohotelfei.Telas;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.alexandrecardoso.projetohotelfei.Classes.Administrador;
 import com.example.alexandrecardoso.projetohotelfei.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
 
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.admsCadastrados;
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
+import static com.example.alexandrecardoso.projetohotelfei.Telas.cadastroUser.referencia;
 
 public class menuCadastroNovoFuncionario extends AppCompatActivity {
+    public static FirebaseAuth administrador_cad = FirebaseAuth.getInstance();
+    public static DatabaseReference administradores = referencia.child("administradores");
     private EditText edUsuario, edNome, edCPF,edData, edEmail, edCelular, edSenha, edSenhaConf;
 
     @Override
@@ -55,11 +65,26 @@ public class menuCadastroNovoFuncionario extends AppCompatActivity {
         }
         // Se tudo estiver ok, cria o usuário
         if(preenchimento && senhas && caracterEspecial && tamanhoUserName && existencia){
-            Administrador novoUser = new Administrador(edUsuario.getText().toString(),edNome.getText().toString(),edCPF.getText().toString(),edData.getText().toString(),edEmail.getText().toString(),edCelular.getText().toString(),edSenha.getText().toString());
-            admsCadastrados.insere(novoUser);
-            tela.exibir(getApplicationContext(),"Novo Administrador Cadastrado com sucesso.");
-            Intent intent = new Intent(this, menuAdministrador.class);
-            startActivity(intent);
+            final Administrador novoAdm = new Administrador(edUsuario.getText().toString(),edNome.getText().toString(),edCPF.getText().toString(),edData.getText().toString(),edEmail.getText().toString(),edCelular.getText().toString(),edSenha.getText().toString());
+            //administradores.push().setValue(novoAdm);
+            administrador_cad.createUserWithEmailAndPassword(novoAdm.getEmail(),novoAdm.getSenha())
+                    .addOnCompleteListener(menuCadastroNovoFuncionario.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!task.isSuccessful()){
+                                tela.exibir(getApplicationContext(),"Erro ao cadastrar administrador!");
+                                Log.w("O que foi", "getInstanceId failed", task.getException());
+
+                            }
+                            else{
+                                administradores.push().setValue(novoAdm);
+                                tela.exibir(getApplicationContext(),"Administrador cadastrado com sucesso!");
+                            }
+                        }
+                    });
+
+            /*Intent intent = new Intent(this, menuAdministrador.class);
+            startActivity(intent);*/
         }
     }
 

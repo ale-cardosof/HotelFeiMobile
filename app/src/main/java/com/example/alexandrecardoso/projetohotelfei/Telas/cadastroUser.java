@@ -1,23 +1,40 @@
 package com.example.alexandrecardoso.projetohotelfei.Telas;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
 import com.example.alexandrecardoso.projetohotelfei.Classes.Usuario;
 import com.example.alexandrecardoso.projetohotelfei.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.usuariosCadastrados;
 
 public class cadastroUser extends AppCompatActivity {
+
+    public static DatabaseReference referencia  = FirebaseDatabase.getInstance().getReference();
+    public static FirebaseAuth usuario_cad = FirebaseAuth.getInstance();
+    public static DatabaseReference usuarios = referencia.child("usuarios");
     private EditText edUsuario, edNome, edCPF,edData, edEmail, edCelular, edSenha, edSenhaConf;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_user);
+
+
+
+
+
         // Retira barra superior com o nome do app
         getSupportActionBar().hide();
         edUsuario = findViewById(R.id.ednumPorta);
@@ -52,9 +69,25 @@ public class cadastroUser extends AppCompatActivity {
         }
         // Se tudo estiver ok, cria o usuário
         if(preenchimento && senhas && caracterEspecial && tamanhoUserName && existencia){
-            Usuario novoUser = new Usuario(edUsuario.getText().toString(),edNome.getText().toString(),edCPF.getText().toString(),edData.getText().toString(),edEmail.getText().toString(),edCelular.getText().toString(),edSenha.getText().toString());
-            usuariosCadastrados.insere(novoUser);
-            tela.exibir(getApplicationContext(),"Usuário cadastrado com sucesso!");
+            final Usuario novoUser = new Usuario(edUsuario.getText().toString(),edNome.getText().toString(),edCPF.getText().toString(),edData.getText().toString(),edEmail.getText().toString(),edCelular.getText().toString(),edSenha.getText().toString());
+            //usuariosCadastrados.insere(novoUser);
+            usuario_cad.createUserWithEmailAndPassword(novoUser.getEmail(),novoUser.getSenha())
+                    .addOnCompleteListener(cadastroUser.this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(!task.isSuccessful()){
+                                tela.exibir(getApplicationContext(),"Erro ao cadastrar usuário!");
+                                Log.w("O que foi", "getInstanceId failed", task.getException());
+
+                            }
+                            else{
+                                usuarios.push().setValue(novoUser);
+                                tela.exibir(getApplicationContext(),"Usuário cadastrado com sucesso!");
+                            }
+                        }
+                    });
+
+
             // Volta para tela de Login
             Intent intent = new Intent(this, loginUser.class);
             startActivity(intent);

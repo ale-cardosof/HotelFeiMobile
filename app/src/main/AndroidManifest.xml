@@ -29,7 +29,7 @@
         <activity android:name=".Telas.menuInsercaoQuarto" />
         <activity android:name=".Telas.cadastroUser" />
         <activity android:name=".Telas.loginUser" />
-        <activity android:name=".Telas.menuCadastroNovoFuncionario" />
+        <!--activity android:name=".Telas.menuCadastroNovoFuncionario" /-->
         <!--activity android:name=".Telas.menuVisualizarHotel" /-->
         <activity android:name=".Telas.menuAdministrador" />
         <activity android:name=".Telas.loginAdm" />
@@ -40,7 +40,7 @@
         <activity android:name=".Telas.UsuarioAvaliacao" />
         <activity android:name=".Telas.menuEstruturaHotel" />
         <activity android:name=".Telas.UsuarioMenu" />
-        <activity android:name=".Telas.menuUsuario">
+        <activity android:name=".Telas.menuCadastroNovoFuncionario">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
