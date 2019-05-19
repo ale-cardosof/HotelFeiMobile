@@ -18,9 +18,9 @@ public class menuUsuario extends AppCompatActivity {
         // Retira barra superior com o nome do app
         getSupportActionBar().hide();
         // Cria Estruturas Iniciais do programa
-        if(!Estruturas.criado){
+        /*if(!Estruturas.criado){
             Estruturas.criaEstru();
-        }
+        }*/
 
     }
 

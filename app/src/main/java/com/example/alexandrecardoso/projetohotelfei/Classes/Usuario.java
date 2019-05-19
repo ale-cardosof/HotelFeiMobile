@@ -1,13 +1,13 @@
 package com.example.alexandrecardoso.projetohotelfei.Classes;
 
-import com.example.alexandrecardoso.projetohotelfei.Estruturas_.LDE;
+
 
 // Implementar Futuramente
 public class Usuario extends Pessoa {
-    private Usuario pai;
+   /* private Usuario pai;
     private Usuario esquerda; // Usados na árvore
     private Usuario direita;
-    private LDE<Reserva> ldeMinhasReservas = new LDE<>();
+    private LDE<Reserva> ldeMinhasReservas = new LDE<>();*/
     // Construtor
 
     public Usuario() {
@@ -15,11 +15,8 @@ public class Usuario extends Pessoa {
 
     public Usuario(String username, String nome, String cpf, String dataNascimento, String email, String celular, String senha) {
         super(username, nome, cpf, dataNascimento, email, celular, senha);
-        pai = null;
-        esquerda = null;
-        direita = null;
     }
-
+/*
     public int getQntReservas(){
         return (this.ldeMinhasReservas.getSize());
     }
@@ -71,5 +68,5 @@ public class Usuario extends Pessoa {
 
     public void setPai(Usuario pai) {
         this.pai = pai;
-    }
+    } */
 }

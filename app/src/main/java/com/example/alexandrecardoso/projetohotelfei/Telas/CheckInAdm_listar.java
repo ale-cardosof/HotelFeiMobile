@@ -8,7 +8,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterReservaAdm;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterReservaAdm;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas;
 import com.example.alexandrecardoso.projetohotelfei.R;
 
@@ -21,7 +21,7 @@ public class CheckInAdm_listar extends AppCompatActivity {
         setContentView(R.layout.activity_check_in_adm_listar);
         getSupportActionBar().hide();
         listView = findViewById(R.id.lvReservaUsuario);
-
+        /*
         adapter = new AdapterReservaAdm(this, Estruturas.hash_reservas.getTodasReservas());
         listView.setAdapter(adapter);
         Estruturas.tela.exibir(getApplicationContext(),"Exibindo todas as reservas realizadas. ");
@@ -33,7 +33,7 @@ public class CheckInAdm_listar extends AppCompatActivity {
                 Estruturas.reserva_clicada = Estruturas.hash_reservas.getReservaAtual(position);
                 startActivity(intent);
             }
-        });
+        }); */
     }
 
     public void onBackPressed(){

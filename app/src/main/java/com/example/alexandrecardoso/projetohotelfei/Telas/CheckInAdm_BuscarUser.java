@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterReservaAdm;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterReservaAdm;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Usuario;
 import com.example.alexandrecardoso.projetohotelfei.R;
@@ -31,12 +31,12 @@ public class CheckInAdm_BuscarUser extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(CheckInAdm_BuscarUser.this, CheckAdmRealiza.class);
-                Estruturas.reserva_clicada = userBuscado.getMinhasReservas(position);
+                //Estruturas.reserva_clicada = userBuscado.getMinhasReservas(position);
                 startActivity(intent);
             }
         });
     }
-
+/*
     public void buscarCliente(View view){
         String usernameBuscado = userCliente.getText().toString();
         userBuscado = Estruturas.usuariosCadastrados.busca(usernameBuscado);
@@ -56,7 +56,7 @@ public class CheckInAdm_BuscarUser extends AppCompatActivity {
                 Estruturas.tela.exibir(getApplicationContext(),"Estas são as reservas de " + userBuscado.getNome() + ".");
             }
         }
-    }
+    } */
 
     @Override
     public void onBackPressed(){

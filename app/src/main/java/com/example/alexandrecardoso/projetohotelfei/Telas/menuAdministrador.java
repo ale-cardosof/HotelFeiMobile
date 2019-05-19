@@ -37,7 +37,7 @@ public class menuAdministrador extends AppCompatActivity {
     }
 
     public void deslogar(View view){
-        Estruturas.logado.desloga();
+        //Estruturas.logado.desloga();
         /* Logado com Sucesso */
         tela.exibir(getApplicationContext(),"Administrador deslogado com sucesso!");
         /* Voltando para o login do Adm */
@@ -55,7 +55,7 @@ public class menuAdministrador extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Estruturas.logado.desloga();
+                                //Estruturas.logado.desloga();
                                 /* Logado com Sucesso */
                                 tela.exibir(getApplicationContext(),"Administrador deslogado com sucesso!");
                                 /* Voltando para o login do Adm */

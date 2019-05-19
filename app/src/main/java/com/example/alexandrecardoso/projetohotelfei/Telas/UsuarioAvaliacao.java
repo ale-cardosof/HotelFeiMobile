@@ -45,7 +45,7 @@ public class UsuarioAvaliacao extends AppCompatActivity {
                 }
                 else{
                     Avaliacao avUsuario = new Avaliacao(txtTitulo.getText().toString(), Float.parseFloat(txtNota.getText().toString()), String.valueOf(txtMensagem.getText()));
-                    quartoAtual.setAvaliacoes(avUsuario);
+                    //quartoAtual.setAvaliacoes(avUsuario);
                     tela.exibir(UsuarioAvaliacao.this, "Avaliação publicada com sucesso! \n Obrigado pela sua colaboração!");
                 }
             }

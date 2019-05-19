@@ -56,45 +56,6 @@ public class loginAdm extends AppCompatActivity {
 
     }
 
-    public int tryLogin(String admProcurado, String senhaDigitada){
-        int aux = 3;
-        Long admProcuradoAsc = this.geraAsc(admProcurado);
-        Administrador admBuscado = Estruturas.admsCadastrados.buscaASC(admProcuradoAsc);
-        // Usuário encontrado
-        if(admBuscado != null){
-            // Senha correta
-            if(admBuscado.getSenha().equals(senhaDigitada)){
-                // Login efetuado
-                // Guarda o usuario logado
-                Estruturas.logado.user = admBuscado;
-                Estruturas.logado.username = admProcurado;
-                Estruturas.logado.usernameASC = admProcuradoAsc;
-                Estruturas.logado.tipoUser = 1;
-                aux = 0;
-                Log.d("UsuarioLogado", "Antes de criar user");
-            }else{// Senha incorreta
-                // Aviso sobre senha incorreta
-                aux = 1;
-            }
-        }else{ // Usuário não existe
-            // Aviso sobre usuario não existente
-            aux = 2;
-        }return aux;
-    }
-
-    public Long geraAsc(String entrada) {
-        if(entrada.equals("")){
-            return Long.parseLong("0");
-        }else{
-            /* Converte String pra ASC */
-            String provisorio = "";
-            char[] ascii2 = entrada.toCharArray();
-            for(char ch:ascii2){
-                provisorio = provisorio + ((int)ch - 48);
-            }
-            return Long.parseLong(provisorio);
-        }
-    }
 
     @Override
     public void onBackPressed(){

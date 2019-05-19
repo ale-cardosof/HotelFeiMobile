@@ -13,7 +13,7 @@ import com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Quarto;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Usuario;
 import com.example.alexandrecardoso.projetohotelfei.R;
-import com.example.alexandrecardoso.projetohotelfei.Adapters.ReservaAdapter;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.ReservaAdapter;
 
 public class UsuarioReservas extends AppCompatActivity {
 
@@ -22,10 +22,10 @@ public class UsuarioReservas extends AppCompatActivity {
         setContentView(R.layout.activity_usuario_reservas);
         ListView listView = findViewById(R.id.lvUsuarioReserva);
         getSupportActionBar().hide();
-        ArrayAdapter adapter = new ReservaAdapter(this, ((Usuario) Estruturas.logado.user).getMinhasReservas());
-        listView.setAdapter(adapter);
+        //ArrayAdapter adapter = new ReservaAdapter(this, ((Usuario) Estruturas.logado.user).getMinhasReservas());
+       // listView.setAdapter(adapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      /*  listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(UsuarioReservas.this, UsuarioAvaliacao.class);
@@ -42,6 +42,6 @@ public class UsuarioReservas extends AppCompatActivity {
                     startActivity(intent);
                 }
             }
-        });
+        }); */
     }
 }

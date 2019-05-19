@@ -55,7 +55,7 @@ public class UsuarioMenu extends AppCompatActivity {
         btnDeslogar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Estruturas.logado.desloga();
+                //Estruturas.logado.desloga();
                 /* Logado com Sucesso */
                 Toast.makeText(getApplicationContext(), "Usuário deslogado com sucesso!", Toast.LENGTH_SHORT).show();
                 /* Voltando para o login do Adm */
@@ -73,7 +73,7 @@ public class UsuarioMenu extends AppCompatActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                Estruturas.logado.desloga();
+                               // Estruturas.logado.desloga();
                                 /* Logado com Sucesso */
                                 tela.exibir(getApplicationContext(),"Usuário deslogado com sucesso!");
                                 /* Voltando para o login do Adm */

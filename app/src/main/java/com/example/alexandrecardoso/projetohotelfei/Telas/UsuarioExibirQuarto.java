@@ -11,8 +11,8 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterAvaliacao;
-import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterQuartos;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterAvaliacao;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterQuartos;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Quarto;
 import com.example.alexandrecardoso.projetohotelfei.R;
 
@@ -32,7 +32,7 @@ public class UsuarioExibirQuarto extends AppCompatActivity {
 
         quartoExibido = quartoAtual;
         quartoAtual = null;
-
+/*
         ((TextView)findViewById(R.id.lblNumCamas)).setText(String.valueOf(quartoExibido.getQntdCamas()));
         ((TextView)findViewById(R.id.lblDetalhes)).setText("Detalhes - Quarto : " +quartoExibido.getNumPorta());
         ((TextView)findViewById(R.id.lblPossuiTV)).setText(quartoExibido.isPossuiTv() ? "Sim" : "Não");
@@ -52,7 +52,7 @@ public class UsuarioExibirQuarto extends AppCompatActivity {
         ((ViewGroup.LayoutParams) params).height = 750 * lvAvaliacoes.getCount();
         lvAvaliacoes.setLayoutParams(params);
         lvAvaliacoes.requestLayout();
-
+*/
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

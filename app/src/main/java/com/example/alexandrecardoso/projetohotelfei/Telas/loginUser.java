@@ -46,6 +46,13 @@ public class loginUser extends AppCompatActivity {
                         }
                         else{
                             tela.exibir(getApplicationContext(),"Logado com sucesso!");
+                            //Verificar logado
+                            if(usuario_cad.getCurrentUser() != null){
+                                tela.exibir(getApplicationContext(),"Usuario Logado " + usuario_cad.getCurrentUser().getEmail());
+                            }
+                            else{
+                                tela.exibir(getApplicationContext(),"Usuario Deslogado");
+                            }
                             Intent intent = new Intent(loginUser.this, UsuarioMenu.class);
                             startActivity(intent);
                         }
@@ -54,44 +61,6 @@ public class loginUser extends AppCompatActivity {
 
     }
 
-    public int tryLogin(String userProcurado, String senhaDigitada){
-        int aux = 3;
-        Long userProcuradoAsc = this.geraAsc(userProcurado);
-        Usuario usuarioBuscado = Estruturas.usuariosCadastrados.buscaASC(userProcuradoAsc);
-        // Usuário encontrado
-        if(usuarioBuscado != null){
-            // Senha correta
-            if(usuarioBuscado.getSenha().equals(senhaDigitada)){
-                // Login efetuado
-                // Guarda o usuario logado
-                Estruturas.logado.user = usuarioBuscado;
-                Estruturas.logado.username = userProcurado;
-                Estruturas.logado.usernameASC = userProcuradoAsc;
-                Estruturas.logado.tipoUser = 2;
-                aux = 0;
-            }else{// Senha incorreta
-                // Aviso sobre senha incorreta
-                aux = 1;
-            }
-        }else{ // Usuário não existe
-            // Aviso sobre usuario não existente
-            aux = 2;
-        }return aux;
-    }
-
-    public Long geraAsc(String entrada) {
-        if(entrada.equals("")){
-            return Long.parseLong("0");
-        }else{
-            /* Converte String pra ASC */
-            String provisorio = "";
-            char[] ascii2 = entrada.toCharArray();
-            for(char ch:ascii2){
-                provisorio = provisorio + ((int)ch - 48);
-            }
-            return Long.parseLong(provisorio);
-        }
-    }
 
     public void novoCadastro(View view){
         Intent intent = new Intent(this, cadastroUser.class);

@@ -16,7 +16,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 
-import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.admsCadastrados;
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
 import static com.example.alexandrecardoso.projetohotelfei.Telas.cadastroUser.referencia;
 
@@ -58,7 +57,7 @@ public class menuCadastroNovoFuncionario extends AppCompatActivity {
                     tamanhoUserName = this.verificaTamanhoUserName();
                     if(tamanhoUserName){
                         // Verifica se já existe
-                        existencia = this.verificaExistencia();
+                        //existencia = this.verificaExistencia();
                     }
                 }
             }
@@ -140,7 +139,7 @@ public class menuCadastroNovoFuncionario extends AppCompatActivity {
         }
         return true;
     }
-
+/*
     public boolean verificaExistencia(){
         // Verifica se aquele nome de usuário já existe
         if((admsCadastrados.busca(edUsuario.getText().toString())) != null){
@@ -148,7 +147,7 @@ public class menuCadastroNovoFuncionario extends AppCompatActivity {
             return false;
         }
         return true;
-    }
+    } */
 
     public boolean verificaCaracterEspecial(){
         char atual;

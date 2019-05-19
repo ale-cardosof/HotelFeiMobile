@@ -198,7 +198,7 @@ public class menuInsercaoQuarto extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+/*
         if(resultCode == RESULT_OK){
             imagem = null;
             novoQuarto.adicionaImagem(imagem,posImg);
@@ -240,7 +240,7 @@ public class menuInsercaoQuarto extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        }
+        } */
     }
 
     @Override
@@ -295,7 +295,7 @@ public class menuInsercaoQuarto extends AppCompatActivity {
         }
         return  true;
     }
-
+/*
     public boolean verificaPorta(){
 
         for(int i=0;i<Estruturas.ldeQuartos.getSize();i++){
@@ -322,5 +322,5 @@ public class menuInsercaoQuarto extends AppCompatActivity {
             Intent intent = new Intent(menuInsercaoQuarto.this, menuEstruturaHotel.class);
             startActivity(intent);
         }
-    }
+    }*/
 }

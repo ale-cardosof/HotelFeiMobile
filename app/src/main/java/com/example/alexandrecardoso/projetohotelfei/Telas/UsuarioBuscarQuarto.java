@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterQuartos;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterQuartos;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas;
 import com.example.alexandrecardoso.projetohotelfei.R;
 
@@ -20,13 +20,13 @@ public class UsuarioBuscarQuarto extends AppCompatActivity {
         getSupportActionBar().hide();
         vpBuscaQuarto = findViewById(R.id.vpBuscaQuarto);
         Button btnVisuQuarto = findViewById(R.id.btnVisuQuarto);
-        vpBuscaQuarto.setAdapter(new AdapterQuartos(UsuarioBuscarQuarto.this, Estruturas.ldeQuartos));
+        //vpBuscaQuarto.setAdapter(new AdapterQuartos(UsuarioBuscarQuarto.this, Estruturas.ldeQuartos));
 
         btnVisuQuarto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(UsuarioBuscarQuarto.this, UsuarioExibirQuarto.class);
-                UsuarioExibirQuarto.quartoAtual = Estruturas.ldeQuartos.getByIndex(vpBuscaQuarto.getCurrentItem());
+                //UsuarioExibirQuarto.quartoAtual = Estruturas.ldeQuartos.getByIndex(vpBuscaQuarto.getCurrentItem());
                 startActivity(intent);
             }
         });

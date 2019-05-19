@@ -69,7 +69,7 @@ public class menuAlterarQuarto extends AppCompatActivity {
 
         // Retira barra superior com o nome do app
         getSupportActionBar().hide();
-        this.setDadosQuarto();
+        //this.setDadosQuarto();
 
         Permissao.validarPermissoes(permissoesNecessarias, this, 1);
 
@@ -198,7 +198,7 @@ public class menuAlterarQuarto extends AppCompatActivity {
 
 
     }
-
+/*
     public void alteraImg(){
         for(int i = 0; i <= Estruturas.ldeQuartos.getSize(); i++){
             if(numeroQuarto == Estruturas.ldeQuartos.getByIndex(i).getNumPorta()){
@@ -206,7 +206,7 @@ public class menuAlterarQuarto extends AppCompatActivity {
                 break;
     }
         }
-    }
+    } */
 
     public void verificaRadioButton(){
         rgTv.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -219,7 +219,7 @@ public class menuAlterarQuarto extends AppCompatActivity {
             }
         });
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -330,5 +330,5 @@ public class menuAlterarQuarto extends AppCompatActivity {
         tela.exibir(getApplicationContext(),"Quarto alterado com sucesso!");
         limparCampos();
         finish();
-    }
+    } */
 }

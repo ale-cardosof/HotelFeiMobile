@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.example.alexandrecardoso.projetohotelfei.R;
 
-import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.logado;
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
 
 public class usuario_editarSenha extends AppCompatActivity {
@@ -28,7 +27,7 @@ public class usuario_editarSenha extends AppCompatActivity {
         edSenhaNovaDois = findViewById(R.id.edSenhaNovaDois);
     }
 
-    public void alteraSenha(View view){
+    /*public void alteraSenha(View view){
         // Verifica se a senha atual está correta
         if(edSenhaAntiga.getText().toString().equals(logado.user.getSenha())){
             // Verifica se as novas senhas são iguais
@@ -44,7 +43,7 @@ public class usuario_editarSenha extends AppCompatActivity {
         }else{
             tela.exibir(getApplicationContext(),"Senha Atual Incorreta!");
         }
-    }
+    } */
 
     public void voltar(View view){
         Intent intent = new Intent(this, usuario_editarinfo.class);

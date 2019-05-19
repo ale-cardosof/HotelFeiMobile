@@ -2,8 +2,6 @@ package com.example.alexandrecardoso.projetohotelfei.Classes;
 
 import android.graphics.Bitmap;
 
-import com.example.alexandrecardoso.projetohotelfei.Estruturas_.LDE;
-import com.example.alexandrecardoso.projetohotelfei.Estruturas_.LES;
 
 public class Quarto {
     private int numPorta; // Chave
@@ -12,6 +10,9 @@ public class Quarto {
     private int qntdCamas;
     private int qntdChuveiros;
     private boolean possuiTv;
+
+
+    /*
     private LDE<Avaliacao> ldeAvaliacoes = new LDE<>();
     private LES<Bitmap> lesImagens = new LES<>();
 
@@ -95,5 +96,5 @@ public class Quarto {
 
     public LES<Bitmap> getLesImagens() {
         return lesImagens;
-    }
+    } */
 }

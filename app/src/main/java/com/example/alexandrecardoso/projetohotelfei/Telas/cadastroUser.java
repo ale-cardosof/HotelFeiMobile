@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
-import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.usuariosCadastrados;
+
 
 public class cadastroUser extends AppCompatActivity {
 
@@ -30,10 +30,6 @@ public class cadastroUser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_user);
-
-
-
-
 
         // Retira barra superior com o nome do app
         getSupportActionBar().hide();
@@ -51,24 +47,8 @@ public class cadastroUser extends AppCompatActivity {
         boolean preenchimento = false,senhas = false,caracterEspecial = false,tamanhoUserName = false,existencia = false;
         // Verifica se todos os campos estão preenchidos
         preenchimento = this.verificaPreenchimento();
-        if(preenchimento){
-            // Verifica veracidade da senha
-            senhas = this.verificaSenha();
-            if(senhas){
-                // Verifica se tem acento ou ponto
-                caracterEspecial = this.verificaCaracterEspecial();
-                if(caracterEspecial){
-                    // Verifica se o tamanho do username digitado tem 8 ou menos caracteres
-                    tamanhoUserName = this.verificaTamanhoUserName();
-                    if(tamanhoUserName){
-                        // Verifica se já existe
-                        existencia = this.verificaExistencia();
-                    }
-                }
-            }
-        }
         // Se tudo estiver ok, cria o usuário
-        if(preenchimento && senhas && caracterEspecial && tamanhoUserName && existencia){
+        if(preenchimento && existencia){
             final Usuario novoUser = new Usuario(edUsuario.getText().toString(),edNome.getText().toString(),edCPF.getText().toString(),edData.getText().toString(),edEmail.getText().toString(),edCelular.getText().toString(),edSenha.getText().toString());
             //usuariosCadastrados.insere(novoUser);
             usuario_cad.createUserWithEmailAndPassword(novoUser.getEmail(),novoUser.getSenha())
@@ -124,7 +104,7 @@ public class cadastroUser extends AppCompatActivity {
         return true;
     }
 
-    public boolean verificaSenha(){
+    /*public boolean verificaSenha(){
         // Verifica se as senhas tem mais 4 digitos
         if(edSenha.getText().toString().length() < 4){
             tela.exibir(getApplicationContext(),"Senha informada tem menos de 4 digitos.");
@@ -136,37 +116,17 @@ public class cadastroUser extends AppCompatActivity {
             return false;
         }
         return true;
-    }
+    }*/
 
-    public boolean verificaTamanhoUserName(){
-        // Verifica se o campo username tem mais de 8 caracteres ou menos de 2
-        if(edUsuario.getText().toString().length() > 8 || edUsuario.getText().toString().length() < 2){
-            tela.exibir(getApplicationContext(),"Username inválido (mais de 8 caracteres)");
-            return false;
-        }
-        return true;
-    }
 
-    public boolean verificaExistencia(){
+   /* public boolean verificaExistencia(){
         // Verifica se aquele nome de usuário já existe
         if((usuariosCadastrados.busca(edUsuario.getText().toString())) != null){
             tela.exibir(getApplicationContext(),"Username já existente. Escolha outro.");
             return false;
         }
         return true;
-    }
+    } */
 
-    public boolean verificaCaracterEspecial(){
-        char atual;
-        for (int i=0; i<edUsuario.getText().toString().length(); i++) {
-            atual = edUsuario.getText().toString().charAt(i);
-            // Se o char não é letra ou número, retorna falso
-            if((!(Character.isLetter(atual))) && (!(Character.isDigit(atual)))){
-                tela.exibir(getApplicationContext(),"O Username digitado contém caracteres especiais (" + atual + ")." );
-                return false;
-            }
-        }
-        return true;
-    }
 
 }

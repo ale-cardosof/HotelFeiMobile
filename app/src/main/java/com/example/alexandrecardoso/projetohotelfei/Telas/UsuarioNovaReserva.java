@@ -18,8 +18,6 @@ import com.example.alexandrecardoso.projetohotelfei.R;
 import java.util.Calendar;
 import java.util.Date;
 
-import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.hash_reservas;
-import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.logado;
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
 
 public class UsuarioNovaReserva extends AppCompatActivity {
@@ -47,7 +45,7 @@ public class UsuarioNovaReserva extends AppCompatActivity {
         btnVerificarDisp = findViewById(R.id.btnVerificarDisp);
         btnReservar = findViewById(R.id.btnReservar);
         // Atribui o valor da diaria do quarto
-        valDiaria = quartoReserva.getValorDiaria();
+        //valDiaria = quartoReserva.getValorDiaria();
 
         // Atribui imagem do quarto recebido à ImageView
         Bitmap icon = BitmapFactory.decodeResource(UsuarioNovaReserva.this.getResources(),
@@ -55,9 +53,9 @@ public class UsuarioNovaReserva extends AppCompatActivity {
 
         ((ImageView)findViewById(R.id.imvQuarto)).setImageBitmap(icon);
         // Atribui os textos de informações sobre o quarto
-        ((TextView)findViewById(R.id.lblValorDiaria)).setText(String.valueOf(quartoReserva.getValorDiaria()));
+        //((TextView)findViewById(R.id.lblValorDiaria)).setText(String.valueOf(quartoReserva.getValorDiaria()));
         ((TextView)findViewById(R.id.lblValorDia)).setText(String.valueOf(valDiaria));
-        ((TextView)findViewById(R.id.lblNumQuarto)).setText(String.valueOf(quartoReserva.getNumPorta()));
+        //((TextView)findViewById(R.id.lblNumQuarto)).setText(String.valueOf(quartoReserva.getNumPorta()));
 
         // Seta o calendario como invisivel
         if (cvDataReserva.getVisibility() == CalendarView.VISIBLE) {
@@ -121,8 +119,8 @@ public class UsuarioNovaReserva extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     int diasHosp;
-                    if(!hash_reservas.verificaDisponibilidade(dataEntradaReserva,dataSaidaReserva, quartoReserva.getNumPorta()))
-                        throw new Exception("Esse quarto já está reservado para essa data.");
+                   /* if(!hash_reservas.verificaDisponibilidade(dataEntradaReserva,dataSaidaReserva, quartoReserva.getNumPorta()))
+                        throw new Exception("Esse quarto já está reservado para essa data.");*/
                     // Caso a data de Saida seja menor que a de entrada retorna o erro
                     if(dataEntradaReserva.compareTo(dataSaidaReserva) == 1) {
                         throw new Exception("A data de entrada não pode ser maior que a data de saida!");
@@ -143,7 +141,7 @@ public class UsuarioNovaReserva extends AppCompatActivity {
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((Usuario)(logado.user)).setMinhasReservas(new Reserva((logado.user).getNome(), dataEntradaReserva, dataSaidaReserva,quartoReserva, valTotal ));
+                //((Usuario)(logado.user)).setMinhasReservas(new Reserva((logado.user).getNome(), dataEntradaReserva, dataSaidaReserva,quartoReserva, valTotal ));
                 tela.exibir(UsuarioNovaReserva.this, "Reserva realizada com sucesso!!");
             }
         });

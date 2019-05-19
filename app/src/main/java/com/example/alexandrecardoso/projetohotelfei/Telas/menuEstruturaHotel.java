@@ -14,12 +14,10 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.example.alexandrecardoso.projetohotelfei.Adapters.AdapterQuartosInsert;
+//import com.example.alexandrecardoso.projetohotelfei.Utilizardps.AdapterQuartosInsert;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas;
 import com.example.alexandrecardoso.projetohotelfei.R;
-import com.example.alexandrecardoso.projetohotelfei.Adapters.RecyclerItemClickListener;
-
-import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
+//import com.example.alexandrecardoso.projetohotelfei.Adapters.RecyclerItemClickListener;
 
 public class menuEstruturaHotel extends AppCompatActivity {
 
@@ -35,15 +33,15 @@ public class menuEstruturaHotel extends AppCompatActivity {
         listHoteis = findViewById(R.id.recyclerHotel);
 
         //Configuraando adapter
-        AdapterQuartosInsert adapter = new AdapterQuartosInsert(Estruturas.ldeQuartos);
+        //AdapterQuartosInsert adapter = new AdapterQuartosInsert(Estruturas.ldeQuartos);
         //Configurar recyclerview
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         listHoteis.setLayoutManager(layoutManager);
         listHoteis.setHasFixedSize(true);
         listHoteis.addItemDecoration(new DividerItemDecoration(this, LinearLayout.VERTICAL));
-        listHoteis.setAdapter(adapter);
+       //listHoteis.setAdapter(adapter);
 
-        //Eventos de click
+        /*/Eventos de click
         listHoteis.addOnItemTouchListener(
             new RecyclerItemClickListener(
                     getApplicationContext(),
@@ -65,7 +63,7 @@ public class menuEstruturaHotel extends AppCompatActivity {
                         }
                     }
             )
-        );
+        ); */
 
     }
 
@@ -86,7 +84,7 @@ public class menuEstruturaHotel extends AppCompatActivity {
         dialog.setPositiveButton("Alterar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                numeroQuarto = Estruturas.ldeQuartos.getByIndex(position).getNumPorta();
+                //numeroQuarto = Estruturas.ldeQuartos.getByIndex(position).getNumPorta();
                 Log.d("Valor", ""+numeroQuarto);
                 Intent intent = new Intent(menuEstruturaHotel.this, menuAlterarQuarto.class);
                 startActivity(intent);
@@ -98,7 +96,7 @@ public class menuEstruturaHotel extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Toast.makeText(getApplicationContext(),"O quarto foi excluido.",
                         Toast.LENGTH_SHORT).show();
-                Estruturas.ldeQuartos.removeByIndex(position);
+                //Estruturas.ldeQuartos.removeByIndex(position);
                 Intent intent = new Intent(menuEstruturaHotel.this, menuEstruturaHotel.class);
                 startActivity(intent);
             }

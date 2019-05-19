@@ -21,6 +21,7 @@ public class CheckAdmRealiza extends AppCompatActivity {
         idReserva = findViewById(R.id.idReserva);
         statusReserva = findViewById(R.id.statusReserva);
         alteracao = findViewById(R.id.alteracao);
+        /*
         // Pega as informações da Reserva Clicada e troca
         nomeDoUsuario.setText(Estruturas.reserva_clicada.getUsuario());
         idReserva.setText(Integer.toString(Estruturas.reserva_clicada.getIdReserva()));
@@ -43,10 +44,10 @@ public class CheckAdmRealiza extends AppCompatActivity {
             statusReserva.setText(reserva);
             alteracaoT = "Nenhuma.";
             alteracao.setText(alteracaoT);
-        }
+        } */
     }
 
-    public void mudaStatus(View view){
+    /*public void mudaStatus(View view){
         if((!(Estruturas.reserva_clicada.isCheckin())) && (!(Estruturas.reserva_clicada.isCheckout()))){
             // Nesse caso, é apenas reserva, fazendo check-in
             Estruturas.reserva_clicada.setCheckin(true);
@@ -59,7 +60,7 @@ public class CheckAdmRealiza extends AppCompatActivity {
             // Nesse caso já foi feito checkOut, fechando o pedido
             Estruturas.tela.exibir(getApplicationContext(),"Esta reserva já foi finalizada!");
         }
-    }
+    } */
 
     public void onBackPressed(){
         Intent intent = new Intent(CheckAdmRealiza.this, CheckInAdm.class);
