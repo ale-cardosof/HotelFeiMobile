@@ -65,14 +65,14 @@ public class cadastroUser extends AppCompatActivity {
                         if(task.isSuccessful()){
                             Log.i("CreateUser","Sucesso ao cadastrrar!");
                             pegaCod =  usuario_cad.getCurrentUser().getUid();
-                            novoUser.setCodPessoa(pegaCod);
+                            novoUser.setCodPessoa(pegaCod);//
                             usuarios.push().getParent().child(pegaCod).setValue(novoUser);
                             tela.exibir(getApplicationContext(),"Usuário cadastrado com sucesso!");
                         }
                         else
                             Log.i("CreateUser","Erro ao cadastrrar!");
                             Log.i("merda", "getInstanceId failed", task.getException());
-                            //tela.exibir(getApplicationContext(),"Erro:" + task.getException());
+                            //tela.exibir(getApplicationContext(),"Erro:" + task.getException())
                     }
                 });
 
