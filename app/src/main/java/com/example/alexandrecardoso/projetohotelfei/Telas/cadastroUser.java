@@ -72,7 +72,7 @@ public class cadastroUser extends AppCompatActivity {
                         else
                             Log.i("CreateUser","Erro ao cadastrrar!");
                             Log.i("merda", "getInstanceId failed", task.getException());
-                            tela.exibir(getApplicationContext(),"Erro:" + task.getException());
+                            //tela.exibir(getApplicationContext(),"Erro:" + task.getException());
                     }
                 });
 
