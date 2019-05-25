@@ -193,6 +193,7 @@
             android:ems="10"
             android:hint="Valor diária"
             android:inputType="number|textPersonName"
+            android:text="12313123"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ednumPorta" />
@@ -238,6 +239,7 @@
             android:ems="10"
             android:hint="Número da Porta"
             android:inputType="number|textPersonName"
+            android:text="123123"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.52"
             app:layout_constraintStart_toStartOf="parent"
@@ -255,6 +257,7 @@
             android:ems="10"
             android:hint="Quantidade Camas"
             android:inputType="number|textPersonName"
+            android:text="31231323"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edValorDiaria" />
@@ -271,6 +274,7 @@
             android:ems="10"
             android:hint="Quantidade Chuveiro"
             android:inputType="number|textPersonName"
+            android:text="12312313"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edQtdCama" />

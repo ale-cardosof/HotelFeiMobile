@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -19,9 +20,23 @@ import com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Quarto;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Permissao;
 import com.example.alexandrecardoso.projetohotelfei.R;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
+import static com.example.alexandrecardoso.projetohotelfei.Telas.cadastroUser.referencia;
 
 public class menuInsercaoQuarto extends AppCompatActivity {
+    public static DatabaseReference quartos = referencia.child("quartos");
     private String[] permissoesNecessarias = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
@@ -36,11 +51,19 @@ public class menuInsercaoQuarto extends AppCompatActivity {
     private static Bitmap imagem = null;
     private  RadioGroup rgTv;
     private  boolean possuiTv=true;
+    private static StorageReference storage;
+    private StorageReference storageReference;
+    private String pegaPush, pegaID;
+    private Uri localImagemSelecionada;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu_insercao_quarto);
+
+        storageReference = getFirebaseStorage();
+        pegaPush = quartos.push().getKey();
+
         edNumPorta = findViewById(R.id.ednumPorta);
         edValorDiaria = findViewById(R.id.edValorDiaria);
         edqdtCama = findViewById(R.id.edQtdCama);
@@ -195,44 +218,169 @@ public class menuInsercaoQuarto extends AppCompatActivity {
 
     }
 
+
+    public static StorageReference getFirebaseStorage(){
+        if(storage ==  null){
+            storage = FirebaseStorage.getInstance().getReference();
+        }
+        return storage;
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-/*
+
         if(resultCode == RESULT_OK){
             imagem = null;
-            novoQuarto.adicionaImagem(imagem,posImg);
 
             try{
                 switch (requestCode){
                     case SELECAO_CAMERA:
                         imagem = (Bitmap) data.getExtras().get("data");
-                        novoQuarto.adicionaImagem(imagem,posImg);
+                        //novoQuarto.adicionaImagem(imagem,posImg);
 
                         break;
                     case SELECAO_GALERIA:
-                        Uri localImagemSelecionada = data.getData();
+                        localImagemSelecionada = data.getData();
                         // Verificar espaço
                         imagem = MediaStore.Images.Media.getBitmap(getContentResolver(), localImagemSelecionada);
-                        novoQuarto.adicionaImagem(imagem,posImg);
+                        //novoQuarto.adicionaImagem(imagem,posImg);
                         break;
                 }
 
                 if(imagem != null){
                     if(posImg==0) {
                         imgQuarto1.setImageBitmap(imagem);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+                        final StorageReference imagemRef = storageReference.child("imagens")
+                                .child("quartos").child(pegaPush).child("foto1.jpeg");
+                        //novoQuarto.setFotoUrl1(a);
+
+                        UploadTask uploadTask = imagemRef.putFile(localImagemSelecionada);
+
+                        Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                            @Override
+                            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                                if(!task.isSuccessful())
+                                    throw task.getException();
+                                return null;
+                            }
+                        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Uri> task) {
+                                if(task.isSuccessful()){
+                                    Uri downloadUri = task.getResult();
+                                    String downloadUrl = downloadUri.toString();
+                                    novoQuarto.setFotoUrl1(downloadUrl);
+                                }
+                            }
+                        });
+
+                        Log.i("teste1", ""+ imagemRef.getDownloadUrl().getResult());
+                        byte[] dadosImagem = baos.toByteArray();
+
+                        /*uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                tela.exibir(getApplicationContext(),"Imagem não inserida com sucesso");
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                tela.exibir(getApplicationContext(),"Image foi inserida");
+                            }
+                        });*/
+
+
                     }
                     if(posImg==1) {
                         imgQuarto2.setImageBitmap(imagem);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+                        StorageReference imagemRef = storageReference.child("imagens")
+                                .child("quartos").child(pegaPush).child("foto2.jpeg");
+                        novoQuarto.setFotoUrl2(imagemRef.getPath());
+                        byte[] dadosImagem = baos.toByteArray();
+
+                        UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                tela.exibir(getApplicationContext(),"Imagem inserida com sucesso");
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                tela.exibir(getApplicationContext(),"Imagem não foi inserida");
+                            }
+                        });
                     }
                     if(posImg==2) {
                         imgQuarto3.setImageBitmap(imagem);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+                        StorageReference imagemRef = storageReference.child("imagens")
+                                .child("quartos").child(pegaPush).child("foto3.jpeg");
+                        novoQuarto.setFotoUrl3(imagemRef.getPath());
+                        byte[] dadosImagem = baos.toByteArray();
+
+                        UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                tela.exibir(getApplicationContext(),"Imagem inserida com sucesso");
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                tela.exibir(getApplicationContext(),"Imagem não foi inserida");
+                            }
+                        });
                     }
                     if(posImg==3) {
                         imgQuarto4.setImageBitmap(imagem);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+                        StorageReference imagemRef = storageReference.child("imagens")
+                                .child("quartos").child(pegaPush).child("foto4.jpeg");
+                        novoQuarto.setFotoUrl4(imagemRef.getPath());
+                        byte[] dadosImagem = baos.toByteArray();
+
+                        UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                tela.exibir(getApplicationContext(),"Imagem inserida com sucesso");
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                tela.exibir(getApplicationContext(),"Imagem não foi inserida");
+                            }
+                        });
                     }
                     if(posImg==4) {
                         imgQuarto5.setImageBitmap(imagem);
+                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                        imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos);
+                        StorageReference imagemRef = storageReference.child("imagens")
+                                .child("quartos").child(pegaPush).child("foto5.jpeg");
+                        novoQuarto.setFotoUrl5(imagemRef.getPath());
+                        byte[] dadosImagem = baos.toByteArray();
+
+                        UploadTask uploadTask = imagemRef.putBytes(dadosImagem);
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                tela.exibir(getApplicationContext(),"Imagem inserida com sucesso");
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                tela.exibir(getApplicationContext(),"Imagem não foi inserida");
+                            }
+                        });
                     }
 
                 }
@@ -240,7 +388,7 @@ public class menuInsercaoQuarto extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        } */
+        }
     }
 
     @Override
@@ -295,16 +443,16 @@ public class menuInsercaoQuarto extends AppCompatActivity {
         }
         return  true;
     }
-/*
-    public boolean verificaPorta(){
 
+    public boolean verificaPorta(){
+/*
         for(int i=0;i<Estruturas.ldeQuartos.getSize();i++){
             Quarto quarto = Estruturas.ldeQuartos.getByIndex(i);
             if(quarto.getNumPorta()== (Integer.parseInt(edNumPorta.getText().toString()))){
                 tela.exibir(getApplicationContext(),"Número de porta já existente.");
                 return false;
             }
-        }
+        } */
         return true;
     }
 
@@ -316,11 +464,17 @@ public class menuInsercaoQuarto extends AppCompatActivity {
             novoQuarto.setQntdChuveiros(Integer.parseInt(edqtdChuveiro.getText().toString()));
             verificaRadioButton();
             novoQuarto.setPossuiTv(possuiTv);
-            Estruturas.ldeQuartos.insere(novoQuarto);
+            novoQuarto.setStatus("Disponivel");
+            novoQuarto.setIdQuarto(pegaPush);
+            //Estruturas.ldeQuartos.insere(novoQuarto);
+            Log.d("Merda",quartos.push().toString());
+            quartos.push().getParent().child(pegaPush).setValue(novoQuarto);
+            //tela.exibir(getApplicationContext(),"ai" +quartos.push().toString());
+
             tela.exibir(getApplicationContext(),"Quarto cadastrado com sucesso!");
             limparCampos();
             Intent intent = new Intent(menuInsercaoQuarto.this, menuEstruturaHotel.class);
             startActivity(intent);
         }
-    }*/
+    }
 }

@@ -5,6 +5,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
@@ -14,11 +15,21 @@ import com.example.alexandrecardoso.projetohotelfei.Classes.Quarto;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Reserva;
 import com.example.alexandrecardoso.projetohotelfei.Classes.Usuario;
 import com.example.alexandrecardoso.projetohotelfei.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.example.alexandrecardoso.projetohotelfei.Classes.Estruturas.tela;
+import static com.example.alexandrecardoso.projetohotelfei.Telas.cadastroUser.usuario_cad;
+import static com.example.alexandrecardoso.projetohotelfei.Telas.cadastroUser.usuarios;
+import static com.example.alexandrecardoso.projetohotelfei.Telas.menuEstruturaHotel.quartosref;
+import static com.example.alexandrecardoso.projetohotelfei.Telas.menuInsercaoQuarto.quartos;
 
 public class UsuarioNovaReserva extends AppCompatActivity {
 
@@ -28,6 +39,7 @@ public class UsuarioNovaReserva extends AppCompatActivity {
     private Date dataEntradaReserva, dataSaidaReserva;
     private double valDiaria = 0,valTotal;
     static Quarto quarto;
+    private List<Quarto> quartosR = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +57,18 @@ public class UsuarioNovaReserva extends AppCompatActivity {
         btnVerificarDisp = findViewById(R.id.btnVerificarDisp);
         btnReservar = findViewById(R.id.btnReservar);
         // Atribui o valor da diaria do quarto
-        //valDiaria = quartoReserva.getValorDiaria();
+        valDiaria = quartoReserva.getValorDiaria();
+        pesquisaQuartos(quartoReserva.getIdQuarto());
 
         // Atribui imagem do quarto recebido à ImageView
-        Bitmap icon = BitmapFactory.decodeResource(UsuarioNovaReserva.this.getResources(),
+       /* Bitmap icon = BitmapFactory.decodeResource(UsuarioNovaReserva.this.getResources(),
                 R.drawable.quarto_1);
 
-        ((ImageView)findViewById(R.id.imvQuarto)).setImageBitmap(icon);
+        ((ImageView)findViewById(R.id.imvQuarto)).setImageBitmap(icon); */
         // Atribui os textos de informações sobre o quarto
-        //((TextView)findViewById(R.id.lblValorDiaria)).setText(String.valueOf(quartoReserva.getValorDiaria()));
+        ((TextView)findViewById(R.id.lblValorDiaria)).setText(String.valueOf(quartoReserva.getValorDiaria()));
         ((TextView)findViewById(R.id.lblValorDia)).setText(String.valueOf(valDiaria));
-        //((TextView)findViewById(R.id.lblNumQuarto)).setText(String.valueOf(quartoReserva.getNumPorta()));
+        ((TextView)findViewById(R.id.lblNumQuarto)).setText(String.valueOf(quartoReserva.getNumPorta()));
 
         // Seta o calendario como invisivel
         if (cvDataReserva.getVisibility() == CalendarView.VISIBLE) {
@@ -119,7 +132,11 @@ public class UsuarioNovaReserva extends AppCompatActivity {
             public void onClick(View v) {
                 try {
                     int diasHosp;
-                   /* if(!hash_reservas.verificaDisponibilidade(dataEntradaReserva,dataSaidaReserva, quartoReserva.getNumPorta()))
+                    //ver depois
+                    if(quartoReserva.getStatus().equals("Reservado")){
+                        throw new Exception("Esse quarto já está reservado para essa data.")  ;
+                    }
+                    /* if(!hash_reservas.verificaDisponibilidade(dataEntradaReserva,dataSaidaReserva, quartoReserva.getNumPorta()))
                         throw new Exception("Esse quarto já está reservado para essa data.");*/
                     // Caso a data de Saida seja menor que a de entrada retorna o erro
                     if(dataEntradaReserva.compareTo(dataSaidaReserva) == 1) {
@@ -141,12 +158,46 @@ public class UsuarioNovaReserva extends AppCompatActivity {
         btnReservar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //((Usuario)(logado.user)).setMinhasReservas(new Reserva((logado.user).getNome(), dataEntradaReserva, dataSaidaReserva,quartoReserva, valTotal ));
+                Usuario merda = new Usuario();
+                Quarto merda2 = new Quarto();
+                String pegaCod;
+                pegaCod = usuario_cad.getCurrentUser().getUid();
+                tela.exibir(getApplicationContext(),pegaCod.toString());
+                merda.setMinhasReservas(new Reserva(pegaCod,dataEntradaReserva,dataSaidaReserva,quartoReserva,valTotal, quartoReserva.getIdQuarto()));
+                merda2.setCodUserReserva(pegaCod);
+                merda.setMinhasReservas(new Reserva(pegaCod,dataEntradaReserva,dataSaidaReserva,quartoReserva,valTotal, quartoReserva.getIdQuarto()));
+                //usuarios.push().getParent().child(pegaCod).child("reservas").setValue(merda.getMinhasReservas());
+                //quartos.push().getParent().child(quartoReserva.getIdQuarto()).child("codigoUser").setValue(merda2.getCodUserReserva());
+                quartos.push().getParent().child(quartoReserva.getIdQuarto()).child("reservas").setValue(merda.getMinhasReservas());
+                //setMinhasReservas(new Reserva((logado.user).getNome(), dataEntradaReserva, dataSaidaReserva,quartoReserva, valTotal ));
                 tela.exibir(UsuarioNovaReserva.this, "Reserva realizada com sucesso!!");
+
             }
         });
     }
 
+
+    public void pesquisaQuartos(String texto){
+        Query query = quartosref.orderByChild("id").startAt(texto).endAt(texto + "\uf8ff");
+
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                    quartosR.add(ds.getValue(Quarto.class));
+                }
+//                vpBuscaQuarto.notify();
+                int total = quartosR.size();
+                Log.i("totalQuartos", "total " + total);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     // Função que calcula a diferença entre as datas
     private int diffData(Date dtEntrada, Date dtSaida){

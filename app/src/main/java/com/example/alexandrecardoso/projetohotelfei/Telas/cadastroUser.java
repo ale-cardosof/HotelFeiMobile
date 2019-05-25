@@ -26,6 +26,7 @@ public class cadastroUser extends AppCompatActivity {
     public static FirebaseAuth usuario_cad = FirebaseAuth.getInstance();
     public static DatabaseReference usuarios = referencia.child("usuarios");
     private EditText edUsuario, edNome, edCPF,edData, edEmail, edCelular, edSenha, edSenhaConf;
+    private String pegaCod;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +34,11 @@ public class cadastroUser extends AppCompatActivity {
 
         // Retira barra superior com o nome do app
         getSupportActionBar().hide();
-        edUsuario = findViewById(R.id.ednumPorta);
-        edNome = findViewById(R.id.edSenhaAntiga);
-        edCPF = findViewById(R.id.edSenhaNova);
-        edData = findViewById(R.id.edSenhaNovaDois);
-        edEmail = findViewById(R.id.edqtdChuveiro);
+        edUsuario = findViewById(R.id.edUsuario);
+        edNome = findViewById(R.id.edNome);
+        edCPF = findViewById(R.id.edCPF);
+        edData = findViewById(R.id.edData);
+        edEmail = findViewById(R.id.edEmail);
         edCelular = findViewById(R.id.edCelular);
         edSenha = findViewById(R.id.edSenha);
         edSenhaConf = findViewById(R.id.edSenhaConf);
@@ -46,32 +47,44 @@ public class cadastroUser extends AppCompatActivity {
     public void cadastraUsuario(View view){
         boolean preenchimento = false,senhas = false,caracterEspecial = false,tamanhoUserName = false,existencia = false;
         // Verifica se todos os campos estão preenchidos
-        preenchimento = this.verificaPreenchimento();
+        //preenchimento = this.verificaPreenchimento();
         // Se tudo estiver ok, cria o usuário
-        if(preenchimento && existencia){
-            final Usuario novoUser = new Usuario(edUsuario.getText().toString(),edNome.getText().toString(),edCPF.getText().toString(),edData.getText().toString(),edEmail.getText().toString(),edCelular.getText().toString(),edSenha.getText().toString());
-            //usuariosCadastrados.insere(novoUser);
+
+            final Usuario novoUser = new Usuario();
+            novoUser.setUsername(edUsuario.getText().toString());
+            novoUser.setNome(edNome.getText().toString());
+            novoUser.setCpf(edCPF.getText().toString());
+            novoUser.setDataNascimento(edData.getText().toString());
+            novoUser.setEmail(edEmail.getText().toString());
+            novoUser.setCelular(edCelular.getText().toString());
+            novoUser.setSenha(edSenha.getText().toString());
             usuario_cad.createUserWithEmailAndPassword(novoUser.getEmail(),novoUser.getSenha())
-                    .addOnCompleteListener(cadastroUser.this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(!task.isSuccessful()){
-                                tela.exibir(getApplicationContext(),"Erro ao cadastrar usuário!");
-                                Log.w("O que foi", "getInstanceId failed", task.getException());
-
-                            }
-                            else{
-                                usuarios.push().setValue(novoUser);
-                                tela.exibir(getApplicationContext(),"Usuário cadastrado com sucesso!");
-                            }
+                .addOnCompleteListener(cadastroUser.this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            Log.i("CreateUser","Sucesso ao cadastrrar!");
+                            pegaCod =  usuario_cad.getCurrentUser().getUid();
+                            novoUser.setCodPessoa(pegaCod);
+                            usuarios.push().getParent().child(pegaCod).setValue(novoUser);
+                            tela.exibir(getApplicationContext(),"Usuário cadastrado com sucesso!");
                         }
-                    });
+                        else
+                            Log.i("CreateUser","Erro ao cadastrrar!");
+                            Log.i("merda", "getInstanceId failed", task.getException());
+                            tela.exibir(getApplicationContext(),"Erro:" + task.getException());
+                    }
+                });
 
+
+
+
+
+        //tela.exibir(getApplicationContext(),"Usuário cadastrado com sucesso!");
 
             // Volta para tela de Login
-            Intent intent = new Intent(this, loginUser.class);
-            startActivity(intent);
-        }
+
+
     }
 
     public boolean verificaPreenchimento(){

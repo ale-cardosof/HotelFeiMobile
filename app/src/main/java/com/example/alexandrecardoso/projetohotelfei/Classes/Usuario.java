@@ -1,13 +1,18 @@
 package com.example.alexandrecardoso.projetohotelfei.Classes;
 
 
+import com.example.alexandrecardoso.projetohotelfei.Estruturas_.LDE;
+
+import java.util.ArrayList;
+import java.util.List;
 
 // Implementar Futuramente
 public class Usuario extends Pessoa {
-   /* private Usuario pai;
+    private Usuario pai;
     private Usuario esquerda; // Usados na árvore
     private Usuario direita;
-    private LDE<Reserva> ldeMinhasReservas = new LDE<>();*/
+    //private LDE<Reserva> ldeMinhasReservas = new LDE<>();
+    private List<Reserva> minhasReservas = new ArrayList<Reserva>();
     // Construtor
 
     public Usuario() {
@@ -27,7 +32,7 @@ public class Usuario extends Pessoa {
 
     public Reserva getMinhasReservas(int position){
         return ldeMinhasReservas.getByIndex(position);
-    }
+    } */
 
     public void copiaUser(Usuario clone){
         this.setUsername(clone.getUsername());
@@ -40,10 +45,22 @@ public class Usuario extends Pessoa {
         this.setUsernameASC(clone.getUsernameASC());
 
     }
-
+/*
     public void setMinhasReservas(Reserva novaReserva) {
         this.ldeMinhasReservas.insere(novaReserva);
         Estruturas.hash_reservas.insereHash(novaReserva);
+    } */
+
+    public List<Reserva> getMinhasReservas() {
+        return minhasReservas;
+    }
+
+    public void setMinhasReservas(Reserva minhasReservas) {
+        this.minhasReservas.add(minhasReservas);
+    }
+
+    public void getQTDReservas(){
+        this.minhasReservas.size();
     }
 
     public Usuario getEsquerda() {
@@ -68,5 +85,7 @@ public class Usuario extends Pessoa {
 
     public void setPai(Usuario pai) {
         this.pai = pai;
-    } */
+    }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.alexandrecardoso.projetohotelfei.Classes;
 
 abstract public class Pessoa {
+    private String codPessoa;
     private String username;
     private Long usernameASC; // Chave
     private String senha;
@@ -15,6 +16,18 @@ abstract public class Pessoa {
     }
 
     public Pessoa(String username, String nome, String cpf, String dataNascimento, String email, String celular, String senha) {
+        this.username = username;
+        this.senha = senha;
+        this.usernameASC = this.geraAsc(this.username);
+        this.nome = nome;
+        this.cpf = cpf;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+        this.celular = celular;
+
+    }
+    public Pessoa(String codPessoa,String username, String nome, String cpf, String dataNascimento, String email, String celular, String senha) {
+        this.codPessoa = codPessoa;
         this.username = username;
         this.senha = senha;
         this.usernameASC = this.geraAsc(this.username);
@@ -101,5 +114,13 @@ abstract public class Pessoa {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getCodPessoa() {
+        return codPessoa;
+    }
+
+    public void setCodPessoa(String codPessoa) {
+        this.codPessoa = codPessoa;
     }
 }
